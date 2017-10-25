@@ -1,0 +1,17 @@
+need new iproute2:
+
+git clone git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git
+./configure --prefix=/usr
+make
+make install
+
+To compile user_xdp* progs (it was in the comments...duh):
+
+gcc -I ../lib/ ../lib/libbpf.o user_xdp10.c -o xdp10
+
+
+problem: after unloading xdp, interface stops responding to pings -- maybe
+I did something weird? Seems to be ok now.
+
+if modifying IP packet at all, need to update checksum or else host stack
+will complain.
