@@ -1,0 +1,10 @@
+sudo docker network create --subnet 10.10.1.0/24 --gateway 10.10.1.1 --internal net1
+sudo docker network create --subnet 10.10.2.0/24 --gateway 10.10.2.1 --internal net2
+sudo docker run -itd -u root --privileged --name lb u9012063/p4xdp
+sudo docker network connect net1 lb
+sudo docker run -itd -u root --privileged --name target1 u9012063/p4xdp
+sudo docker network connect net1 target1
+sudo docker network connect net2 target1
+sudo docker run -itd -u root --privileged --name target2 u9012063/p4xdp
+sudo docker network connect net1 target2
+sudo docker network connect net2 target2
